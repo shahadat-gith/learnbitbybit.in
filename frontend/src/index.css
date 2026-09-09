@@ -1,0 +1,82 @@
+@import "tailwindcss";
+
+@theme {
+  /* Brand Core */
+  --color-brand-primary: #00A896;
+  --color-brand-navy: #0F172A;
+  --color-brand-cyan: #0284C7;
+  --color-brand-mint: #E6F4F1;
+  --color-brand-charcoal: #1E293B;
+
+  /* Surfaces & Backgrounds */
+  --color-surface-base: var(--bg-main);
+  --color-surface-card: var(--bg-card);
+  --color-surface-elevated: var(--bg-elevated);
+  --color-surface-hover: var(--bg-hover);
+  --color-surface-active: var(--bg-active);
+
+  /* Borders & Dividers */
+  --color-border-subtle: var(--border-subtle);
+  --color-border-default: var(--border-main);
+  --color-border-strong: var(--border-strong);
+  --color-border-focus: #00A896;
+
+  /* Status & Messaging */
+  --color-success: #10B981;
+  --color-success-light: #ECFDF5;
+  --color-warning: #F59E0B;
+  --color-warning-light: #FFFBEB;
+  --color-error: #EF4444;
+  --color-error-light: #FEF2F2;
+  --color-info: #3B82F6;
+  --color-info-light: #EFF6FF;
+
+  /* Difficulty Badges */
+  --color-difficulty-easy: #059669;
+  --color-difficulty-medium: #D97706;
+  --color-difficulty-hard: #DC2626;
+
+  /* Fonts */
+  --font-sans: "Inter", system-ui, -apple-system, sans-serif;
+  --font-mono: "JetBrains Mono", monospace;
+}
+
+/* Light Mode Variables */
+:root {
+  --bg-main: #FFFFFF;
+  --bg-card: #F8FAFC;
+  --bg-elevated: #FFFFFF;
+  --bg-hover: #F1F5F9;
+  --bg-active: #E2E8F0;
+
+  --border-subtle: #F1F5F9;
+  --border-main: #E2E8F0;
+  --border-strong: #CBD5E1;
+
+  --text-main: #0F172A;
+  --text-muted: #64748B;
+}
+
+/* Dark Mode Variables */
+.dark {
+  --bg-main: #0F172A;
+  --bg-card: #1E293B;
+  --bg-elevated: #334155;
+  --bg-hover: #334155/60;
+  --bg-active: #475569;
+
+  --border-subtle: #1E293B;
+  --border-main: #334155;
+  --border-strong: #475569;
+
+  --text-main: #F8FAFC;
+  --text-muted: #94A3B8;
+}
+
+@layer base {
+  body {
+    background-color: var(--color-surface-base);
+    color: var(--text-main);
+    font-family: var(--font-sans);
+  }
+}
