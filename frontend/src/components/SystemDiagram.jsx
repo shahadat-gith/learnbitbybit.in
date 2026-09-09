@@ -115,7 +115,6 @@ function Card({ icon: Icon, label, sub, badgeBg, badgeText, dashed, muted, compa
       </span>
       <div className="min-w-0 flex-1 leading-tight">
         <div className="flex items-center gap-1">
-          {/* Dynamic theme colors used here */}
           <p className="truncate text-xs font-bold text-text-main">
             {label}
           </p>
@@ -146,245 +145,248 @@ export default function SystemDiagram() {
 
   return (
     <div className="relative mx-auto w-full max-w-5xl">
-      <div className="relative overflow-hidden rounded-3xl border border-border-default bg-surface-elevated/80 p-5 shadow-2xl backdrop-blur-xl sm:p-7">
-        {/* Canvas Workspace */}
-        <div
-          className="relative overflow-hidden rounded-2xl border border-border-subtle bg-surface-card p-4"
-          style={{ height: 420 }}
-        >
-          <svg
-            className="absolute inset-0 h-full w-full"
-            viewBox="0 0 100 100"
-            preserveAspectRatio="none"
+      <div className="relative overflow-hidden rounded-3xl border border-border-default bg-surface-elevated/80 p-3 shadow-2xl backdrop-blur-xl sm:p-7">
+        
+        {/* Horizontal Scrollable Wrapper */}
+        <div className="w-full overflow-x-auto rounded-2xl pb-2 pt-1 [scrollbar-width:thin]">
+          <div
+            className="relative min-w-[720px] overflow-hidden rounded-2xl border border-border-subtle bg-surface-card p-4"
+            style={{ height: 420 }}
           >
-            <defs>
-              <marker
-                id="arrow-cyan"
-                viewBox="0 0 8 8"
-                refX="6"
-                refY="4"
-                markerWidth="5"
-                markerHeight="5"
-                orient="auto"
-              >
-                <path d="M0,0 L8,4 L0,8 Z" className="fill-brand-cyan" />
-              </marker>
-
-              <marker
-                id="arrow-subtle"
-                viewBox="0 0 8 8"
-                refX="6"
-                refY="4"
-                markerWidth="5"
-                markerHeight="5"
-                orient="auto"
-              >
-                <path
-                  d="M0,0 L8,4 L0,8 Z"
-                  className="fill-border-strong"
-                />
-              </marker>
-            </defs>
-
-            {/* Client → Load Balancer */}
-            <g
-              opacity={isHighlighted("lb") ? 1 : 0.25}
-              className="transition-opacity duration-300"
+            <svg
+              className="absolute inset-0 h-full w-full"
+              viewBox="0 0 100 100"
+              preserveAspectRatio="none"
             >
-              <path
-                d={`M${X.client + 6},50 L${X.lb - 7},50`}
-                className="stroke-brand-cyan"
-                strokeWidth="1.5"
-                vectorEffect="non-scaling-stroke"
-                markerEnd="url(#arrow-cyan)"
-                fill="none"
-              />
-              <path
-                d={`M${X.client + 6},50 L${X.lb - 7},50`}
-                className="stroke-white/80 dark:stroke-cyan-200"
-                strokeWidth="1.5"
-                strokeDasharray="4,6"
-                strokeDashoffset="100"
-                style={{ animation: "dash 3s linear infinite" }}
-                vectorEffect="non-scaling-stroke"
-                fill="none"
-              />
-            </g>
+              <defs>
+                <marker
+                  id="arrow-cyan"
+                  viewBox="0 0 8 8"
+                  refX="6"
+                  refY="4"
+                  markerWidth="5"
+                  markerHeight="5"
+                  orient="auto"
+                >
+                  <path d="M0,0 L8,4 L0,8 Z" className="fill-brand-cyan" />
+                </marker>
 
-            {/* Load Balancer → Services Bus */}
-            {SERVICES.map((s) => {
-              const active = isHighlighted(s.id) || isHighlighted("lb");
-              return (
-                <g
-                  key={s.id}
-                  opacity={active ? 1 : 0.2}
-                  className="transition-opacity duration-300"
+                <marker
+                  id="arrow-subtle"
+                  viewBox="0 0 8 8"
+                  refX="6"
+                  refY="4"
+                  markerWidth="5"
+                  markerHeight="5"
+                  orient="auto"
                 >
                   <path
-                    d={elbowHorizontal(
-                      X.lb + 7,
-                      50,
-                      X.bus1,
-                      X.services - 7,
-                      s.y,
-                    )}
-                    className="stroke-brand-cyan"
-                    strokeWidth="1.5"
-                    vectorEffect="non-scaling-stroke"
-                    markerEnd="url(#arrow-cyan)"
-                    fill="none"
+                    d="M0,0 L8,4 L0,8 Z"
+                    className="fill-border-strong"
                   />
-                  <path
-                    d={elbowHorizontal(
-                      X.lb + 7,
-                      50,
-                      X.bus1,
-                      X.services - 7,
-                      s.y,
-                    )}
-                    className="stroke-cyan-200 dark:stroke-cyan-300"
-                    strokeWidth="1.5"
-                    strokeDasharray="3,5"
-                    style={{ animation: "dash 2.5s linear infinite" }}
-                    vectorEffect="non-scaling-stroke"
-                    fill="none"
-                  />
-                </g>
-              );
-            })}
+                </marker>
+              </defs>
 
-            {/* Services → Bus 2 */}
-            {SERVICES.map((s) => {
-              const active = isHighlighted(s.id);
-              return (
+              {/* Client → Load Balancer */}
+              <g
+                opacity={isHighlighted("lb") ? 1 : 0.25}
+                className="transition-opacity duration-300"
+              >
                 <path
-                  key={`m-${s.id}`}
-                  d={`M${X.services + 7},${s.y} L${X.bus2},${s.y}`}
-                  className="stroke-border-strong"
-                  strokeWidth="1.2"
-                  strokeDasharray="2,2"
-                  opacity={active ? 1 : 0.25}
+                  d={`M${X.client + 6},50 L${X.lb - 7},50`}
+                  className="stroke-brand-cyan"
+                  strokeWidth="1.5"
+                  vectorEffect="non-scaling-stroke"
+                  markerEnd="url(#arrow-cyan)"
+                  fill="none"
+                />
+                <path
+                  d={`M${X.client + 6},50 L${X.lb - 7},50`}
+                  className="stroke-white/80 dark:stroke-cyan-200"
+                  strokeWidth="1.5"
+                  strokeDasharray="4,6"
+                  strokeDashoffset="100"
+                  style={{ animation: "dash 3s linear infinite" }}
                   vectorEffect="non-scaling-stroke"
                   fill="none"
                 />
-              );
-            })}
+              </g>
 
-            {/* Bus 2 Vertical Line */}
-            <line
-              x1={X.bus2}
-              y1="15"
-              x2={X.bus2}
-              y2="85"
-              className="stroke-border-strong"
-              strokeWidth="1.5"
-              vectorEffect="non-scaling-stroke"
-            />
+              {/* Load Balancer → Services Bus */}
+              {SERVICES.map((s) => {
+                const active = isHighlighted(s.id) || isHighlighted("lb");
+                return (
+                  <g
+                    key={s.id}
+                    opacity={active ? 1 : 0.2}
+                    className="transition-opacity duration-300"
+                  >
+                    <path
+                      d={elbowHorizontal(
+                        X.lb + 7,
+                        50,
+                        X.bus1,
+                        X.services - 7,
+                        s.y,
+                      )}
+                      className="stroke-brand-cyan"
+                      strokeWidth="1.5"
+                      vectorEffect="non-scaling-stroke"
+                      markerEnd="url(#arrow-cyan)"
+                      fill="none"
+                    />
+                    <path
+                      d={elbowHorizontal(
+                        X.lb + 7,
+                        50,
+                        X.bus1,
+                        X.services - 7,
+                        s.y,
+                      )}
+                      className="stroke-cyan-200 dark:stroke-cyan-300"
+                      strokeWidth="1.5"
+                      strokeDasharray="3,5"
+                      style={{ animation: "dash 2.5s linear infinite" }}
+                      vectorEffect="non-scaling-stroke"
+                      fill="none"
+                    />
+                  </g>
+                );
+              })}
 
-            {/* Bus 2 → Data Stores */}
-            {STORES.map((d) => {
-              const active = isHighlighted(d.id);
-              return (
-                <g
-                  key={`s-${d.id}`}
-                  opacity={active ? 1 : 0.25}
-                  className="transition-opacity duration-300"
-                >
+              {/* Services → Bus 2 */}
+              {SERVICES.map((s) => {
+                const active = isHighlighted(s.id);
+                return (
                   <path
-                    d={`M${X.bus2},${d.y} L${X.stores - 7},${d.y}`}
+                    key={`m-${s.id}`}
+                    d={`M${X.services + 7},${s.y} L${X.bus2},${s.y}`}
                     className="stroke-border-strong"
-                    strokeWidth="1.5"
-                    vectorEffect="non-scaling-stroke"
-                    markerEnd="url(#arrow-subtle)"
-                    fill="none"
-                  />
-                  <path
-                    d={`M${X.bus2},${d.y} L${X.stores - 7},${d.y}`}
-                    className="stroke-brand-primary/40"
                     strokeWidth="1.2"
-                    strokeDasharray="3,4"
-                    style={{ animation: "dash 4s linear infinite" }}
+                    strokeDasharray="2,2"
+                    opacity={active ? 1 : 0.25}
                     vectorEffect="non-scaling-stroke"
                     fill="none"
                   />
-                </g>
-              );
-            })}
-          </svg>
+                );
+              })}
 
-          {/* NODES */}
-
-          {/* Client Node */}
-          <Node
-            x={X.client}
-            y={50}
-            delay={0.1}
-            onHover={(h) => setHoveredNode(h ? "all" : null)}
-          >
-            <Card
-              icon={Globe2}
-              label="Client"
-              sub="Web, mobile, APIs"
-              compact
-              active
-            />
-          </Node>
-
-          {/* Primary Load Balancer */}
-          <Node
-            x={X.lb}
-            y={50}
-            delay={0.2}
-            onHover={(h) => setHoveredNode(h ? "lb" : null)}
-          >
-            <Card
-              icon={Server}
-              label="Load Balancer"
-              sub="NGINX"
-              badgeBg="bg-brand-primary text-white"
-              active
-            />
-          </Node>
-
-          {/* Services Group */}
-          {SERVICES.map((s, idx) => (
-            <Node
-              key={s.id}
-              x={X.services}
-              y={s.y}
-              delay={0.25 + idx * 0.05}
-              isDimmed={hoveredNode && !isHighlighted(s.id)}
-              onHover={(h) => setHoveredNode(h ? s.id : null)}
-            >
-              <Card
-                icon={s.icon}
-                label={s.label}
-                sub={s.sub}
-                badgeBg={s.badgeBg}
-                badgeText={s.badgeText}
+              {/* Bus 2 Vertical Line */}
+              <line
+                x1={X.bus2}
+                y1="15"
+                x2={X.bus2}
+                y2="85"
+                className="stroke-border-strong"
+                strokeWidth="1.5"
+                vectorEffect="non-scaling-stroke"
               />
-            </Node>
-          ))}
 
-          {/* Storage Stores Group */}
-          {STORES.map((d, idx) => (
+              {/* Bus 2 → Data Stores */}
+              {STORES.map((d) => {
+                const active = isHighlighted(d.id);
+                return (
+                  <g
+                    key={`s-${d.id}`}
+                    opacity={active ? 1 : 0.25}
+                    className="transition-opacity duration-300"
+                  >
+                    <path
+                      d={`M${X.bus2},${d.y} L${X.stores - 7},${d.y}`}
+                      className="stroke-border-strong"
+                      strokeWidth="1.5"
+                      vectorEffect="non-scaling-stroke"
+                      markerEnd="url(#arrow-subtle)"
+                      fill="none"
+                    />
+                    <path
+                      d={`M${X.bus2},${d.y} L${X.stores - 7},${d.y}`}
+                      className="stroke-brand-primary/40"
+                      strokeWidth="1.2"
+                      strokeDasharray="3,4"
+                      style={{ animation: "dash 4s linear infinite" }}
+                      vectorEffect="non-scaling-stroke"
+                      fill="none"
+                    />
+                  </g>
+                );
+              })}
+            </svg>
+
+            {/* NODES */}
+
+            {/* Client Node */}
             <Node
-              key={d.id}
-              x={X.stores}
-              y={d.y}
-              delay={0.45 + idx * 0.05}
-              isDimmed={hoveredNode && !isHighlighted(d.id)}
-              onHover={(h) => setHoveredNode(h ? d.id : null)}
+              x={X.client}
+              y={50}
+              delay={0.1}
+              onHover={(h) => setHoveredNode(h ? "all" : null)}
             >
               <Card
-                icon={d.icon}
-                label={d.label}
-                sub={d.sub}
-                badgeBg="bg-brand-navy/10 text-brand-navy dark:bg-surface-hover dark:text-text-main"
+                icon={Globe2}
+                label="Client"
+                sub="Web, mobile, APIs"
                 compact
+                active
               />
             </Node>
-          ))}
+
+            {/* Primary Load Balancer */}
+            <Node
+              x={X.lb}
+              y={50}
+              delay={0.2}
+              onHover={(h) => setHoveredNode(h ? "lb" : null)}
+            >
+              <Card
+                icon={Server}
+                label="Load Balancer"
+                sub="NGINX"
+                badgeBg="bg-brand-primary text-white"
+                active
+              />
+            </Node>
+
+            {/* Services Group */}
+            {SERVICES.map((s, idx) => (
+              <Node
+                key={s.id}
+                x={X.services}
+                y={s.y}
+                delay={0.25 + idx * 0.05}
+                isDimmed={hoveredNode && !isHighlighted(s.id)}
+                onHover={(h) => setHoveredNode(h ? s.id : null)}
+              >
+                <Card
+                  icon={s.icon}
+                  label={s.label}
+                  sub={s.sub}
+                  badgeBg={s.badgeBg}
+                  badgeText={s.badgeText}
+                />
+              </Node>
+            ))}
+
+            {/* Storage Stores Group */}
+            {STORES.map((d, idx) => (
+              <Node
+                key={d.id}
+                x={X.stores}
+                y={d.y}
+                delay={0.45 + idx * 0.05}
+                isDimmed={hoveredNode && !isHighlighted(d.id)}
+                onHover={(h) => setHoveredNode(h ? d.id : null)}
+              >
+                <Card
+                  icon={d.icon}
+                  label={d.label}
+                  sub={d.sub}
+                  badgeBg="bg-brand-navy/10 text-brand-navy dark:bg-surface-hover dark:text-text-main"
+                  compact
+                />
+              </Node>
+            ))}
+          </div>
         </div>
       </div>
 
