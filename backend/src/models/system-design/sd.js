@@ -3,6 +3,10 @@ import { sectionSchema } from "../common/section.js";
 
 const systemDesignSchema = new mongoose.Schema(
   {
+    type:{
+      type:String,
+      enum:["core-concept", "example"]
+    },
     title: {
       type: String,
       required: true,
@@ -17,7 +21,7 @@ const systemDesignSchema = new mongoose.Schema(
       index: true,
     },
 
-    authorId: {
+    author: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Author",
       required: true,

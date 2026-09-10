@@ -1,5 +1,6 @@
 import express, { json, urlencoded } from "express"
 import cors from "cors"
+import error from "./middlewares/error.js"
 
 const app = express()
 
@@ -14,5 +15,8 @@ app.use(urlencoded({
 }))
 
 //routes
+
+
+app.use(error)
 
 export default app
